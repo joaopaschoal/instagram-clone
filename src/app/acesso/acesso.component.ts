@@ -60,11 +60,11 @@ export class AcessoComponent implements OnInit {
   }
 
   animacaoLoginStart(): void {
-    console.log('Start!!');
+    // console.log('Start!!');
   }
 
   animacaoLoginDone(): void {
-    console.log('Done!!');
+    // console.log('Done!!');
   }
 
 }
