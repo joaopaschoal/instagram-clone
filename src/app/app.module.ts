@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AutenticacaoService } from './autenticacao.service';
+import { AutenticacaoGuard } from './autenticacao-guard.service';
 import { ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
@@ -32,7 +33,7 @@ import { PublicacoesComponent } from './home/publicacoes/publicacoes.component';
     ReactiveFormsModule,
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [AutenticacaoService],
+  providers: [AutenticacaoService, AutenticacaoGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

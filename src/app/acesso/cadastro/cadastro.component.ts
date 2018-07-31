@@ -17,7 +17,7 @@ export class CadastroComponent implements OnInit {
     'nomeCompleto': new FormControl(null, [Validators.required, Validators.minLength(4)]),
     'nomeUsuario': new FormControl(null, [Validators.required, Validators.minLength(4)]),
     'email': new FormControl(null, [Validators.required, Validators.minLength(4)]),
-    'senha': new FormControl(null, [Validators.required, Validators.minLength(4)])
+    'senha': new FormControl(null, [Validators.required, Validators.minLength(6)])
   });
 
   constructor(
@@ -33,13 +33,22 @@ export class CadastroComponent implements OnInit {
   }
 
   cadastrarUsuario(): void {
-    let usuario: Usuario = new Usuario(
-      this.formulario.value.nomeCompleto,
-      this.formulario.value.nomeUsuario,
-      this.formulario.value.email,
-      this.formulario.value.senha
-    );
-    this.autenticacaoService.cadastrarUsuario(usuario);
+    if (this.testarFormularioValido()) {
+      let usuario: Usuario = new Usuario(
+        this.formulario.value.nomeCompleto,
+        this.formulario.value.nomeUsuario,
+        this.formulario.value.email,
+        this.formulario.value.senha
+      );
+      this.autenticacaoService.cadastrarUsuario(usuario)
+          .then(() => {
+            this.exibirLogin();
+          });
+    }
+  }
+
+  testarFormularioValido(): boolean {
+    return this.formulario.valid;
   }
 
 }

@@ -9,11 +9,13 @@ import { AutenticacaoService } from '../../autenticacao.service';
 })
 export class LoginComponent implements OnInit {
 
+  public exibirMsgErroLogin: boolean = false;
+
   @Output() public solicitouPainelCadastro: EventEmitter<string> = new EventEmitter<string>();
 
   public formulario: FormGroup = new FormGroup({
-    'email': new FormControl(null),
-    'senha': new FormControl(null)
+    'email': new FormControl(null, [Validators.required, Validators.email]),
+    'senha': new FormControl(null, [Validators.required, Validators.minLength(6)])
   });
 
   constructor(
@@ -21,6 +23,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // window.formulario = this.formulario;
   }
 
   public exibirPainelCadastro(): void {
@@ -28,11 +31,32 @@ export class LoginComponent implements OnInit {
   }
 
   public autenticar(): void {
-    console.log(this.formulario);
-    this.autenticacaoService.autenticar(
-      this.formulario.value.email,
-      this.formulario.value.senha
-    );
+    if (this.formulario.valid) {
+      this.autenticacaoService.autenticar(
+        this.formulario.value.email,
+        this.formulario.value.senha
+      ).then(() => {
+        this.exibirMsgErroLogin = false;
+      }).catch((e) => {
+        this.exibirMsgErroLogin = true;
+      });
+    }
+  }
+
+  public testarFormularioValido(): boolean {
+    return this.formulario.valid;
+  }
+
+  public onEmailFocus(): void {
+    this._limparMsgErro();
+  }
+
+  public onPasswordFocus(): void {
+    this._limparMsgErro();
+  }
+
+  private _limparMsgErro(): void {
+    this.exibirMsgErroLogin = false;
   }
 
 }

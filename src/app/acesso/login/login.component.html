@@ -9,6 +9,7 @@
           class="form-control"
           placeholder="E-mail"
           formControlName="email"
+          (focus)="onEmailFocus()"
         >
       </div>
       <div class="form-group">
@@ -17,13 +18,14 @@
           class="form-control"
           placeholder="Senha"
           formControlName="senha"
+          (focus)="onPasswordFocus()"
         >
       </div>
-      <button type="submit" class="btn btn-primary btn-sm btn-block">Entrar</button>
+      <button type="submit" class="btn btn-primary btn-sm btn-block" [disabled]="!testarFormularioValido()">Entrar</button>
     </form>
-    <hr />
+    <hr *ngIf="exibirMsgErroLogin" />
 
-    <p class="small text-danger text-center">O nome de usuário inserido não pertence a uma conta. Verifique seu nome de usuário e tente novamente.</p>
+    <p *ngIf="exibirMsgErroLogin" class="small text-danger text-center">O nome de usuário inserido não pertence a uma conta. Verifique seu nome de usuário e tente novamente.</p>
 
   </div>
 </div>
