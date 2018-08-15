@@ -15,7 +15,7 @@ export class AutenticacaoService {
   public cadastrarUsuario(usuario: Usuario): Promise<any> {
     return firebase.auth().createUserWithEmailAndPassword(usuario.email, usuario.senha)
         .then((resposta) => {
-          let base64Pwd = btoa(usuario.senha);
+          let base64Pwd = btoa(usuario.email);
           delete usuario.senha;
           firebase.database()
               .ref(`usuario_detalhe/${base64Pwd}`)
